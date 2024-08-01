@@ -27,7 +27,7 @@ const App = () => {
     client && (
       <div className="flex flex-col h-[100rem]">
         <PDFViewer className="flex-grow">
-          <Report data={data} />
+          <Report />
         </PDFViewer>
       </div>
     )
