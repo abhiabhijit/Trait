@@ -1,5 +1,5 @@
 import { SupabaseClient } from '@supabase/supabase-js';
-import { cache } from 'react';
+import { cache, useCallback } from 'react';
 
 export const getUser = cache(async (supabase: SupabaseClient) => {
   const {
@@ -37,3 +37,34 @@ export const getUserDetails = cache(async (supabase: SupabaseClient) => {
     .single();
   return userDetails;
 });
+
+export const getReportDetails = cache(
+  async (supabase: SupabaseClient, id: string) => {
+    const { data: reportDetails } = await supabase
+      .from('report_details')
+      .select('*')
+      .eq('id', id)
+      .single();
+    return reportDetails;
+  }
+);
+
+export const getReportEntries = cache(async (supabase: SupabaseClient) => {
+  const { data: reportEntries } = await supabase
+    .from('report_details')
+    .select('*');
+
+  return reportEntries;
+});
+
+export const getMicroBiomeData = cache(
+  async (supabase: SupabaseClient, id: string) => {
+    const { data: microBiomeData } = await supabase
+      .from('microbiome_data')
+      .select('*')
+      .eq('report', id)
+      .single();
+
+    return microBiomeData;
+  }
+);
