@@ -200,7 +200,6 @@ const Report = ({
   userData: any;
   microBiomeData: any;
 }) => {
-  console.log(microBiomeData);
   const pieData = [
     { name: 'Bacteroidetes', value: microBiomeData.bacteriodetes },
     { name: 'Firmicutes', value: microBiomeData.firmicutes },

@@ -55,7 +55,7 @@ export const Navbar = ({ user }: { user: User | null }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleAuth = async () => {
     if (user) {
-      return router.push('/account');
+      return router.push('/report');
     }
     return router.push('/auth');
   };
@@ -137,7 +137,7 @@ export const Navbar = ({ user }: { user: User | null }) => {
               className={`border`}
               variant="secondary"
             >
-              {user ? 'Account' : 'Sign In'}
+              {user ? 'View Reports' : 'Sign In'}
             </Button>
             <ModeToggle />
           </div>

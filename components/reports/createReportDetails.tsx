@@ -53,6 +53,7 @@ const ReportDetails = (props: any) => {
             placeholder="John Doe"
             value={reportDetails.house}
             onChange={handleReportDetailsChange}
+            autoComplete="off"
           />
         </div>
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -69,6 +70,7 @@ const ReportDetails = (props: any) => {
             placeholder="age"
             value={reportDetails.age}
             onChange={handleReportDetailsChange}
+            autoComplete="off"
           />
         </div>
       </div>
@@ -124,6 +126,7 @@ const ReportDetails = (props: any) => {
             placeholder="Type of Biomaterial"
             value={reportDetails.tob}
             onChange={handleReportDetailsChange}
+            autoComplete="off"
           />
         </div>
       </div>
