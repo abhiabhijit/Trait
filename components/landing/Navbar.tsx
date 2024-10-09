@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -23,6 +23,7 @@ import { createApiClient } from '@/utils/supabase/api';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import { useSearchParams } from "next/navigation";
 
 interface RouteProps {
   href: string;
@@ -53,12 +54,55 @@ export const Navbar = ({ user }: { user: User | null }) => {
   const { toast } = useToast();
   const api = createApiClient(createClient());
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+
   const handleAuth = async () => {
     if (user) {
       return router.push('/report');
     }
     return router.push('/auth');
   };
+
+   useEffect(() => {
+    const handleAuthSuccess = async (authData: any, localhost_url: string) => {
+      const encodedAuthData = encodeURIComponent(JSON.stringify(authData));
+      const url = `${localhost_url}?secrets=${encodedAuthData}`;
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error making GET request:', error);
+      }
+    };
+    
+     const handleCliAuth = async (localhost_url: string) => {
+       try {
+         const response = {'hey': "hey"};
+         await handleAuthSuccess(response, localhost_url);
+       } catch (error) {
+         console.error('Error fetching user data:', error);
+       }
+     };
+
+     const cli = searchParams.get('cli') || sessionStorage.getItem('cli');
+    const localhost_url = searchParams.get('localhost_url') || sessionStorage.getItem('localhost_url');
+    console.log(localhost_url);
+    console.log(cli);
+    
+    if (cli && localhost_url) {
+      handleCliAuth(localhost_url);
+    }
+   }, []);
+
   return (
     <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
       <NavigationMenu className="mx-auto">
